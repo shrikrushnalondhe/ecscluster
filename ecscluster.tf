@@ -3,8 +3,8 @@ module "ecs_cluster" {
   version = "3.4.0"
 
   region = "us-east-1"
-  vpc_id = "vpc-0413727213c90fd60"
-  subnet_ids = "subnet-0e4d9be10adee579b,subnet-0583f78d928f94463"
+  vpc_id = "vpc-2db7c450"
+  subnet_ids = "subnet-b89563f4,subnet-a595b5fa"
 
   component = "important-component"
   deployment_identifier = "production"
