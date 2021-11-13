@@ -1,4 +1,3 @@
-
 provider "aws" {
   version = "~> 2.0"
   region  = "us-east-1" # Setting my region to London. Use your own region here
@@ -60,21 +59,17 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
 
 
 # Providing a reference to our default VPC
-resource "aws_default_vpc" "default_vpc" {
-}
+#resource "aws_default_vpc" "default_vpc" {
+#}
 
 # Providing a reference to our default subnets
-resource "aws_default_subnet" "default_subnet_a" {
-  availability_zone = "us-east-1a"
-}
+#resource "aws_default_subnet" "default_subnet_a" {
+#  availability_zone = "us-east-1a"
+#}
 
-resource "aws_default_subnet" "default_subnet_b" {
-  availability_zone = "us-east-1b"
-}
-
-resource "aws_default_subnet" "default_subnet_c" {
-  availability_zone = "us-east-1b"
-}
+#resource "aws_default_subnet" "default_subnet_b" {
+#  availability_zone = "us-east-1b"
+#}
 
 
   resource "aws_ecs_service" "my_first_service" {
@@ -84,16 +79,43 @@ resource "aws_default_subnet" "default_subnet_c" {
   launch_type     = "EC2"
   desired_count   = 3 # Setting the number of containers we want deployed to 3
 
+
+
+
+resource "aws_subnet" "subnet_dev" {
+  vpc_id     = "vpc-02f9e5856f2704413"
+  cidr_block = "10.0.4.0/24"
+  map_public_ip_on_launch = true
+  availability_zone = "us-east-1a"
+
+  tags = {
+    Name = "subnet_dev"
+  }
+}
+
+resource "aws_subnet" "subnet_prod" {
+  vpc_id     = "vpc-02f9e5856f2704413"
+  cidr_block = "10.0.5.0/24"
+  map_public_ip_on_launch = true
+  availability_zone = "us-east-1b"
+
+  tags = {
+    Name = "subnet_prod"
+  }
+}
+
+
+
 load_balancer {
     target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our target group
     container_name   = "${aws_ecs_task_definition.my_first_task.family}"
     container_port   = 3000 # Specifying the container port
   }
 
-  network_configuration {
-    subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
+   network_configuration {
+    subnets          = ["${aws_subnet.subnet_dev.id}", "${aws_subnet.subnet_prod.id}"]
    # assign_public_ip = true # Providing our containers with public IPs
-  }
+  #}
 }
 
 resource "aws_security_group" "service_security_group" {
@@ -110,5 +132,15 @@ resource "aws_security_group" "service_security_group" {
     to_port     = 0 # Allowing any outgoing port
     protocol    = "-1" # Allowing any outgoing protocol
     cidr_blocks = ["0.0.0.0/0"] # Allowing traffic out to all IP addresses
+  }
+}
+
+
+
+terraform {
+backend "s3" {
+   bucket = "demobucketecs"
+   key    = "terraform.tfstate"
+   region = "us-east-1"
   }
 }
