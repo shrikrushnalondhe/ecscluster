@@ -67,37 +67,31 @@ resource "aws_ecs_service" "my_first_service" {
   desired_count   = 3 # Setting the number of containers we want deployed to 3
 }
 
-
-# Providing a reference to our default VPC
-resource "aws_default_vpc" "default_vpc" {
-tags = {
-  Name = "mydemovpc"
+resource "aws_vpc" "vpc" {
+    cidr_block = "10.0.0.0/24"
+    enable_dns_support   = true
+    enable_dns_hostnames = true
+    tags       = {
+        Name = "awsvpc"
+    }
 }
 
-# Providing a reference to our default subnets
-resource "aws_default_subnet" "default_subnet_a" {
-  availability_zone = "eu-west-2a"
-  tags = {
-  Name = "default_subnet_a"
+resource "aws_subnet" "pub_subnet1" {
+    vpc_id                  = aws_vpc.vpc.id
+    cidr_block              = "10.1.0.0/22"
+   tags       = {
+        Name = "subnet_dev"
+    }
 }
+resource "aws_subnet" "pub_subnet2" {
+    vpc_id                  = aws_vpc.vpc.id
+    cidr_block              = "10.2.0.0/22"
+   tags       = {
+        Name = "subnet_prod"
+    }
 }
-
-resource "aws_default_subnet" "default_subnet_b" {
-  availability_zone = "eu-west-2b"
-  tags = {
-  Name = "default_subnet_b"
-}
-}
-
-resource "aws_default_subnet" "default_subnet_c" {
-  availability_zone = "eu-west-2c"
-  tags = {
-  Name = "default_subnet_c"
-}
-}
-
   network_configuration {
-    subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
+    subnets          = ["${aws_subnet.pub_subnet1.id}", "${aws_subnet.pub_subnet2.id}"]
     assign_public_ip = true # Providing our containers with public IPs
   }
 }
@@ -105,9 +99,8 @@ resource "aws_alb" "application_load_balancer" {
   name               = "test-lb-tf" # Naming our load balancer
   load_balancer_type = "application"
   subnets = [ # Referencing the default subnets
-    "${aws_default_subnet.default_subnet_a.id}",
-    "${aws_default_subnet.default_subnet_b.id}",
-    "${aws_default_subnet.default_subnet_c.id}"
+    "${aws_subnet.pub_subnet1.id}",
+    "${aws_subnet.pub_subnet2.id}"
   ]
   # Referencing the security group
   security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
