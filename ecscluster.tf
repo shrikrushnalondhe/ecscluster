@@ -74,7 +74,6 @@ resource "aws_vpc" "vpc" {
     tags       = {
         Name = "awsvpc"
     }
-}
 
 resource "aws_subnet" "pub_subnet1" {
     vpc_id                  = aws_vpc.vpc.id
