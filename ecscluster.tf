@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 resource "aws_ecr_repository" "my_first_ecr_repo1" {
-  name = "my-first-ecr-repo" # Naming my repository
+  name = "my-first-ecr-repo1" # Naming my repository
 }
 
 resource "aws_ecs_cluster" "my_cluster" {
@@ -77,7 +77,7 @@ resource "aws_vpc" "vpc" {
 }
 resource "aws_subnet" "subnet_dev" {
     vpc_id                  = aws_vpc.vpc.id
-    cidr_block              = "10.0.4.0/24"
+    cidr_block              = "10.0.1.0/16"
    tags       = {
         Name = "subnet_dev"
     }
@@ -87,7 +87,7 @@ output "aws_subnet_subnet_dev" {
 }
 resource "aws_subnet" "subnet_prod" {
     vpc_id                  = aws_vpc.vpc.id
-    cidr_block              = "10.0.5.0/24"
+    cidr_block              = "10.0.2.0/16"
    tags       = {
         Name = "subnet_prod"
     }
