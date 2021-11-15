@@ -70,6 +70,10 @@ resource "aws_ecs_service" "my_first_service" {
 
 # Providing a reference to our default VPC
 resource "aws_default_vpc" "default_vpc" {
+tags = {
+  Name = "mydemovpc"
+}
+}
 
 # Providing a reference to our default subnets
 resource "aws_default_subnet" "default_subnet_a" {
@@ -90,7 +94,6 @@ resource "aws_default_subnet" "default_subnet_c" {
     subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
     assign_public_ip = true # Providing our containers with public IPs
   }
-}
 
 
 resource "aws_alb" "application_load_balancer" {
