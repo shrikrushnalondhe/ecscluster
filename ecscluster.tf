@@ -96,11 +96,11 @@ resource "aws_subnet" "subnet_prod" {
 output "aws_subnet_subnet_prod" {
   value = "${aws_subnet.subnet_prod.id}"
 }
-  network_configuration {
-    subnets          = ["${aws_subnet.subnet_dev.id}", "${aws_subnet.subnet_prod.id}"]
-    assign_public_ip = true # Providing our containers with public IPs
-  }
-
+ # network_configuration {
+  #  subnets          = ["${aws_subnet.subnet_dev.id}", "${aws_subnet.subnet_prod.id}"]
+   # assign_public_ip = true # Providing our containers with public IPs
+  #}
+#}
 resource "aws_alb" "application_load_balancer" {
   name               = "test-lb-tf" # Naming our load balancer
   load_balancer_type = "application"
