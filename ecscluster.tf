@@ -31,7 +31,7 @@ resource "aws_ecs_task_definition" "my_first_task" {
   ]
   DEFINITION
   requires_compatibilities = ["FARGATE"] # Stating that we are using ECS Fargate
-  network_mode             = "bridge"    # Using awsvpc as our network mode as this is required for Fargate
+  network_mode             = "awsvpc"    # Using awsvpc as our network mode as this is required for Fargate
   memory                   = 512         # Specifying the memory our container requires
   cpu                      = 256         # Specifying the CPU our container requires
   execution_role_arn       = "${aws_iam_role.ecsTaskExecutionRole.arn}"
@@ -96,8 +96,8 @@ resource "aws_subnet" "subnet_prod" {
 output "aws_subnet_subnet_prod" {
   value = "${aws_subnet.subnet_prod.id}"
 }
- # network_configuration {
-  #  subnets          = ["${aws_subnet.subnet_dev.id}", "${aws_subnet.subnet_prod.id}"]
-   # assign_public_ip = true # Providing our containers with public IPs
-  #}
-#}
+  network_configuration {
+    subnets          = ["${aws_subnet.subnet_dev.id}", "${aws_subnet.subnet_prod.id}"]
+    assign_public_ip = true # Providing our containers with public IPs
+  }
+}
