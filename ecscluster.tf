@@ -100,6 +100,6 @@ output "aws_subnet_subnet_prod" {
     subnets          = ["${aws_subnet.subnet_dev.id}", "${aws_subnet.subnet_prod.id}"]
     assign_public_ip = true # Providing our containers with public IPs
   }
-}
+
 
 
