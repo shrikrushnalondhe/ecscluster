@@ -68,7 +68,7 @@ resource "aws_ecs_service" "my_first_service" {
 }
 
 resource "aws_vpc" "vpc" {
-    cidr_block = "10.0.0.0/24"
+    cidr_block = "10.0.0.0/16"
     enable_dns_support   = true
     enable_dns_hostnames = true
     tags       = {
@@ -77,7 +77,7 @@ resource "aws_vpc" "vpc" {
 }
 resource "aws_subnet" "subnet_dev" {
     vpc_id                  = aws_vpc.vpc.id
-    cidr_block              = "10.0.1.0/16"
+    cidr_block              = "10.0.1.0/24"
    tags       = {
         Name = "subnet_dev"
     }
@@ -87,7 +87,7 @@ output "aws_subnet_subnet_dev" {
 }
 resource "aws_subnet" "subnet_prod" {
     vpc_id                  = aws_vpc.vpc.id
-    cidr_block              = "10.0.2.0/16"
+    cidr_block              = "10.0.2.0/24"
    tags       = {
         Name = "subnet_prod"
     }
