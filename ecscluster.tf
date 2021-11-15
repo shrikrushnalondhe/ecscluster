@@ -102,9 +102,4 @@ output "aws_subnet_subnet_prod" {
   #}
 #}
 
-  network_configuration {
-    subnets         = var.subnets
-    security_groups = [aws_security_group.default[0].id]
-    assign_public_ip = var.assign_public_ip
-  }
 
