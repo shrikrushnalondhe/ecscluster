@@ -74,23 +74,30 @@ resource "aws_vpc" "vpc" {
     tags       = {
         Name = "awsvpc"
     }
-
-resource "aws_subnet" "pub_subnet1" {
+}
+resource "aws_subnet" "subnet_dev" {
     vpc_id                  = aws_vpc.vpc.id
     cidr_block              = "10.1.0.0/22"
    tags       = {
         Name = "subnet_dev"
     }
 }
-resource "aws_subnet" "pub_subnet2" {
+output "aws_subnet_subnet_dev" {
+  value = "${aws_subnet.subnet_dev.id}"
+}
+resource "aws_subnet" "subnet_prod" {
     vpc_id                  = aws_vpc.vpc.id
     cidr_block              = "10.2.0.0/22"
    tags       = {
         Name = "subnet_prod"
     }
 }
+
+output "aws_subnet_subnet_prod" {
+  value = "${aws_subnet.subnet_prod.id}"
+}
   network_configuration {
-    subnets          = ["${aws_subnet.pub_subnet1.id}", "${aws_subnet.pub_subnet2.id}"]
+    subnets          = ["${aws_subnet.subnet_dev.id}", "${aws_subnet.subnet_prod.id}"]
     assign_public_ip = true # Providing our containers with public IPs
   }
 }
@@ -98,8 +105,8 @@ resource "aws_alb" "application_load_balancer" {
   name               = "test-lb-tf" # Naming our load balancer
   load_balancer_type = "application"
   subnets = [ # Referencing the default subnets
-    "${aws_subnet.pub_subnet1.id}",
-    "${aws_subnet.pub_subnet2.id}"
+    "${aws_subnet.subnet_dev.id}",
+    "${aws_subnet.subnet_prod.id}"
   ]
   # Referencing the security group
   security_groups = ["${aws_security_group.load_balancer_security_group.id}"]
