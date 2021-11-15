@@ -70,7 +70,6 @@ resource "aws_ecs_service" "my_first_service" {
 
 # Providing a reference to our default VPC
 resource "aws_default_vpc" "default_vpc" {
-}
 
 # Providing a reference to our default subnets
 resource "aws_default_subnet" "default_subnet_a" {
