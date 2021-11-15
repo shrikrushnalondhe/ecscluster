@@ -3,7 +3,7 @@ provider "aws" {
   region  = "us-east-1" # Setting my region to London. Use your own region here
 }
 
-resource "aws_ecr_repository" "my_first_ecr_repo" {
+resource "aws_ecr_repository" "my_first_ecr_repo1" {
   name = "my-first-ecr-repo" # Naming my repository
 }
 
@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "my_first_task" {
   [
     {
       "name": "my-first-task",
-      "image": "${aws_ecr_repository.my_first_ecr_repo.repository_url}",
+      "image": "${aws_ecr_repository.my_first_ecr_repo1.repository_url}",
       "essential": true,
       "portMappings": [
         {
