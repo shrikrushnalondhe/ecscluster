@@ -77,7 +77,7 @@ resource "aws_vpc" "vpc" {
 }
 resource "aws_subnet" "subnet_dev" {
     vpc_id                  = aws_vpc.vpc.id
-    cidr_block              = "10.1.0.0/22"
+    cidr_block              = "10.0.4.0/24"
    tags       = {
         Name = "subnet_dev"
     }
@@ -87,7 +87,7 @@ output "aws_subnet_subnet_dev" {
 }
 resource "aws_subnet" "subnet_prod" {
     vpc_id                  = aws_vpc.vpc.id
-    cidr_block              = "10.2.0.0/22"
+    cidr_block              = "10.0.5.0/24"
    tags       = {
         Name = "subnet_prod"
     }
