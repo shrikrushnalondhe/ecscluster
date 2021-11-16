@@ -172,3 +172,10 @@ resource "aws_lb_listener" "listener" {
   }
 }
 
+
+terraform {
+    backend "s3" {
+        bucket = "statebucket1"
+        key    = "state.tfstate"
+    }
+}
