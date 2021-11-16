@@ -172,13 +172,3 @@ resource "aws_lb_listener" "listener" {
   }
 }
 
-data "terraform_remote_state" "global" {
-  backend = "s3"
-    {
-    region     = "us-east-1"
-    bucket     = "statebucket1"
-    key        = "state.tfstate"
-    lock_table = "terraform-state-lock"
-  }
-}
-
