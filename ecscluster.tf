@@ -106,6 +106,7 @@ output "aws_subnet_subnet_prod" {
 resource "aws_alb" "application_load_balancer" {
   name               = "test-lb-tf" # Naming our load balancer
   load_balancer_type = "application"
+  vpc_id      = "${aws_vpc.vpc.id}"
   subnets = [ # Referencing the default subnets
     "${aws_subnet.subnet_dev.id}",
     "${aws_subnet.subnet_prod.id}"
@@ -116,6 +117,7 @@ resource "aws_alb" "application_load_balancer" {
 
 # Creating a security group for the load balancer:
 resource "aws_security_group" "load_balancer_security_group" {
+  vpc_id      = "${aws_vpc.vpc.id}"
   ingress {
     from_port   = 80 # Allowing traffic in from port 80
     to_port     = 80
