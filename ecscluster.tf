@@ -112,6 +112,13 @@ resource "aws_security_group" "load_balancer_security_group" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # Allowing traffic in from all sources
   }
+  
+  ingress {
+    from_port   = 3000 # Allowing traffic in from port 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Allowing traffic in from all sources
+  }
 
   egress {
     from_port   = 0 # Allowing any incoming port
