@@ -206,7 +206,7 @@ terraform {
     bucket         = "statebucket1"
     region  = "us-east-1"
     key            = "terraform/some_state"
-    role_arn       = "arn:aws:s3:::statebucket1"
+    role_arn       = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
   }
 }
 
