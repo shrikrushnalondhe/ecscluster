@@ -204,7 +204,7 @@ terraform {
   backend "s3" {
     bucket         = "statebucket1"
     key            = "terraform/some_state"
-    region         = “us-east-1"
+  #  region         = “us-east-1"
     role_arn       = "arn:aws:s3:::statebucket1"
   }
 }
