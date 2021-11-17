@@ -156,10 +156,18 @@ resource "aws_lb_target_group" "target_group" {
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = "${aws_vpc.vpc.id}" # Referencing the default VPC
-  health_check {
-    matcher = "200,301,302"
-    path = "/"
+  #health_check {
+   # matcher = "200,301,302"
+    #path = "/"
+  #}
+health_check = {
+    target              = "HTTP:80/"
+    interval            = 30
+    healthy_threshold   = 3
+    unhealthy_threshold = 4
+    timeout             = 6
   }
+
 }
 
 resource "aws_lb_listener" "listener" {
