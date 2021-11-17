@@ -199,13 +199,7 @@ resource "aws_lb_listener" "listener" {
     target_group_arn = "${aws_lb_target_group.target_group.arn}" # Referencing our tagrte group
   }
 }
-terraform {
-backend "s3" {
-   bucket = "demobucketecs"
-   key    = "terraform.tfstate"
-   region = "us-east-1"
-  }
-}
+
 
 
 
