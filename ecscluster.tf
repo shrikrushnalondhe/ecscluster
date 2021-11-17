@@ -200,14 +200,5 @@ resource "aws_lb_listener" "listener" {
   }
 }
 
-terraform {
-  
-  backend "s3" {
-    bucket         = "statebucket1"
-    region  = "us-east-1"
-    key            = "terraform/some_state"
-    role_arn       = "arn:aws:iam::885270470374:role/ecss3"
-  }
-}
 
 
