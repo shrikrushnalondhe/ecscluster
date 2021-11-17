@@ -161,7 +161,7 @@ resource "aws_lb_target_group" "target_group" {
     #path = "/"
   #}
 health_check {
-    target              = "HTTP:80/"
+   # target              = "HTTP:80/"
     interval            = 30
     healthy_threshold   = 3
     unhealthy_threshold = 4
