@@ -117,8 +117,8 @@ resource "aws_security_group" "load_balancer_security_group" {
   }
   
   ingress {
-    from_port   = 3000 # Allowing traffic in from port 3000
-    to_port     = 3000
+    from_port   = 443 # Allowing traffic in from port 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] # Allowing traffic in from all sources
   }
