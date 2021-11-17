@@ -206,7 +206,7 @@ terraform {
     bucket         = "statebucket1"
     region  = "us-east-1"
     key            = "terraform/some_state"
-    role_arn       = "arn:aws:iam::885270470374:user/jenkins"
+    role_arn       = "arn:aws:iam::885270470374:role/ecss3"
   }
 }
 
