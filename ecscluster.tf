@@ -160,7 +160,7 @@ resource "aws_lb_target_group" "target_group" {
    # matcher = "200,301,302"
     #path = "/"
   #}
-health_check = {
+health_check {
     target              = "HTTP:80/"
     interval            = 30
     healthy_threshold   = 3
