@@ -106,6 +106,9 @@ resource "aws_alb" "application_load_balancer" {
 # Creating a security group for the load balancer:
 resource "aws_security_group" "load_balancer_security_group" {
   vpc_id      = "${aws_vpc.vpc.id}"
+   tags       = {
+        Name = "load_balancer_security_group"
+    }
   ingress {
     from_port   = 80 # Allowing traffic in from port 80
     to_port     = 80
@@ -151,6 +154,9 @@ network_configuration  {
 
 resource "aws_security_group" "service_security_group" {
   vpc_id      = "${aws_vpc.vpc.id}"
+  tags       = {
+        Name = "service_security_group"
+    }
   ingress {
     from_port = 0
     to_port   = 0
@@ -172,11 +178,8 @@ resource "aws_lb_target_group" "target_group" {
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"
-  vpc_id      = "${aws_vpc.vpc.id}" # Referencing the default VPC
-  #health_check {
-   # matcher = "200,301,302"
-    #path = "/"
-  #}
+  vpc_id      = "${aws_vpc.vpc.id}" # Referencing the aws VPC
+
 health_check {
    # target              = "HTTP:80/"
     interval            = 30
