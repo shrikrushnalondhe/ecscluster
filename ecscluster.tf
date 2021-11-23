@@ -26,14 +26,14 @@ resource "aws_ecs_task_definition" "my_first_task" {
         }
       ],
       "memory": 256,
-      "cpu": 128
+      "cpu": 256
     }
   ]
   DEFINITION
   requires_compatibilities = ["FARGATE"] # Stating that we are using ECS Fargate
   network_mode             = "awsvpc"    # Using awsvpc as our network mode as this is required for Fargate
   memory                   = 256         # Specifying the memory our container requires
-  cpu                      = 128         # Specifying the CPU our container requires
+  cpu                      = 256        # Specifying the CPU our container requires
   execution_role_arn       = "${aws_iam_role.ecsTaskExecutionRole.arn}"
 }
 
